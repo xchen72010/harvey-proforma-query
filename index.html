@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pending Shipment Proformas</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <main class="container">
+    <p class="eyebrow">SHIPMENT</p>
+    <h1>Pending Shipment Proforma Invoices</h1>
+    <p class="subtitle">Only pending shipment proforma invoices are listed.</p>
+
+    <form id="search-form" class="search">
+      <label for="proforma-name">Proforma Name</label>
+      <div class="search-row">
+        <select id="proforma-name" name="proformaNo" aria-label="Proforma Name">
+          <option value="">All pending shipment proformas</option>
+        </select>
+        <button type="submit">Search</button>
+        <button id="clear-button" type="button" class="secondary">Clear</button>
+      </div>
+      <p class="help">The menu shows <code>invoice_name</code>; its selected value is <code>invoice_no</code>.</p>
+    </form>
+
+    <section class="summary" aria-label="Summary">
+      <div><span>Product Lines</span><strong id="row-count">0</strong></div>
+      <div><span>Checked In</span><strong id="received-total">0</strong></div>
+      <div><span>Outstanding</span><strong id="waiting-total">0</strong></div>
+    </section>
+
+    <section class="panel">
+      <div class="panel-title"><h2>Details</h2><span id="status" role="status">Ready</span></div>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th class="index">No.</th><th>Product Name</th><th>Proforma No.</th><th class="number">Checked In</th><th class="number">Outstanding</th></tr></thead>
+          <tbody id="result-body"><tr><td colspan="5" class="empty">Select a proforma name and search.</td></tr></tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+  <template id="empty-row"><tr><td colspan="5" class="empty">No matching records found.</td></tr></template>
+  <script src="app.js"></script>
+</body>
+</html>

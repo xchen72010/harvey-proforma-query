@@ -1,0 +1,15 @@
+{
+  "IsEncrypted": false,
+  "Values": {
+    "AzureWebJobsStorage": "UseDevelopmentStorage=true",
+    "FUNCTIONS_WORKER_RUNTIME": "node",
+    "AZURE_TENANT_ID": "your-tenant-id",
+    "AZURE_CLIENT_ID": "your-client-id",
+    "AZURE_CLIENT_SECRET": "your-client-secret",
+    "SHAREPOINT_HOSTNAME": "harveypharma.sharepoint.com",
+    "SHAREPOINT_SITE_PATH": "/sites/HarveyPharma",
+    "CHECK_IN_LOOKUP_LIST": "check_in_lookup",
+    "PRICE_LISTS_LIST": "price_lists",
+    "CHECK_IN_ITEMS_LIST": "check_in_items"
+  }
+}
