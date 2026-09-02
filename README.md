@@ -9,6 +9,15 @@ The root folder contains the static website. `api/` is an Azure Functions Node.j
 
 An invoice is included only when it exists in `check_in_lookup`; `waiting` is displayed but is not a filter.
 
+## User interface behavior
+
+- The **Proforma Name** dropdown displays `invoice_name — invoice_no`; searches use only `invoice_no`.
+- Results retain the API's original `price_lists` order by default.
+- Click any table header to sort ascending/descending. The active sort direction is highlighted by the header icon.
+- **Export to Excel** downloads the current filtered and sorted results as an `.xlsx` file.
+- The `No.` column starts at 1 only when a specific proforma has been selected; it remains blank for the All view.
+- Negative **Outstanding** values are displayed and exported as their absolute value followed by `(Extra)`; for example, `-5` becomes `5 (Extra)`.
+
 ## Deploy to Azure
 
 1. Push this folder to a GitHub repository.
@@ -30,3 +39,7 @@ An invoice is included only when it exists in `check_in_lookup`; `waiting` is di
 Copy `api/local.settings.json.example` to `api/local.settings.json`, insert the Entra values, then run `npm install` and `npm start` in `api/` with Azure Functions Core Tools installed.
 
 `Sites.Read.All` can read Lists across the tenant. Keep the client secret only in Azure application settings; never commit `api/local.settings.json` or an Entra client secret.
+
+## Release checklist
+
+After changing source files, commit and push to the GitHub branch connected to Azure Static Web Apps. Wait for GitHub Actions deployment to finish, then verify that the deployed page contains the current sorting icons and the **Export to Excel** button before treating the release as complete.
