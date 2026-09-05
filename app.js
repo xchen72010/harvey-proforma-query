@@ -44,7 +44,7 @@ function render() {
   const shouldNumber = select.value !== '';
   rows.forEach((row, index) => {
     const tr = document.createElement('tr');
-    [shouldNumber ? index + 1 : '', row.product_name, row.invoice_no, numberFormat.format(row.total), formatOutstanding(row.waiting)].forEach((value, i) => {
+    [shouldNumber ? row._originalIndex + 1 : '', row.product_name, row.invoice_no, numberFormat.format(row.total), formatOutstanding(row.waiting)].forEach((value, i) => {
       const td = document.createElement('td');
       td.textContent = value ?? '';
       if (i === 0) td.className = 'index';
@@ -56,6 +56,18 @@ function render() {
   updateSummary(rows);
   updateSortIndicators();
   exportButton.disabled = rows.length === 0;
+}
+
+function clearResults() {
+  select.value = '';
+  currentRows = [];
+  sortKey = null;
+  sortDirection = 'ascending';
+  body.replaceChildren(document.querySelector('#initial-row').content.cloneNode(true));
+  updateSummary([]);
+  updateSortIndicators();
+  exportButton.disabled = true;
+  status.textContent = 'Ready';
 }
 
 async function loadProformas() {
@@ -99,7 +111,7 @@ function exportExcel() {
   const shouldNumber = select.value !== '';
   const values = [
     ['No.', 'Product Name', 'Proforma No.', 'Checked In', 'Outstanding'],
-    ...rows.map((row, index) => [shouldNumber ? index + 1 : '', row.product_name, row.invoice_no, Number(row.total || 0), formatOutstanding(row.waiting)])
+    ...rows.map((row) => [shouldNumber ? row._originalIndex + 1 : '', row.product_name, row.invoice_no, Number(row.total || 0), formatOutstanding(row.waiting)])
   ];
   const worksheet = XLSX.utils.aoa_to_sheet(values);
   worksheet['!cols'] = [{ wch: 8 }, { wch: 34 }, { wch: 24 }, { wch: 14 }, { wch: 14 }];
@@ -111,7 +123,7 @@ function exportExcel() {
 }
 
 document.querySelector('#search-form').addEventListener('submit', (event) => { event.preventDefault(); search(); });
-document.querySelector('#clear-button').addEventListener('click', () => { select.value = ''; search(); });
+document.querySelector('#clear-button').addEventListener('click', clearResults);
 document.querySelectorAll('.sort-button').forEach((button) => button.addEventListener('click', () => {
   const nextKey = button.dataset.sortKey;
   sortDirection = sortKey === nextKey && sortDirection === 'ascending' ? 'descending' : 'ascending';
